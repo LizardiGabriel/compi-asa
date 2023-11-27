@@ -22,7 +22,226 @@ public class ASA implements Parser{
         simb = tokens.get(i).tipo;
 
         while(!hayErrores){
-             
+
+            
+            if(estados.peek() == 0){
+                if(simb == "Q"){
+                    estados.push(1);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == TipoToken.SELECT){
+                    estados.push(2);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                } else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 1){
+                if(simb == TipoToken.EOF)
+                    break;
+                else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 2){
+                if(simb == "D"){
+                    estados.push(3);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == TipoToken.DISTINCT){
+                    estados.push(4);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == "P"){
+                    estados.push(5);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == TipoToken.ASTERISCO){
+                    estados.push(6);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == "A"){
+                    estados.push(7);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == "A2"){
+                    estados.push(8);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == TipoToken.IDENTIFICADOR){
+                    estados.push(9);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 3){
+                if(simb == TipoToken.FROM){
+                    estados.push(17);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 4){
+                if(simb == TipoToken.ASTERISCO){
+                    estados.push(6);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == "A"){
+                    estados.push(7);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == "A2"){
+                    estados.push(8);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == TipoToken.IDENTIFICADOR){
+                    estados.push(9);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == "P"){
+                    estados.push(10);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 5){
+                if(simb == TipoToken.FROM){
+                    simb = "D";
+                    i--;
+                    estados.pop();
+                }
+                else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 6){
+                if(simb == TipoToken.FROM){
+                    simb = "P";
+                    i--;
+                    estados.pop();
+                }
+                else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 7){
+                if(simb == TipoToken.FROM){
+                    simb = "P";
+                    i--;
+                    estados.pop();
+                }
+                else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 8){
+                if(simb == TipoToken.FROM){
+                    simb = "A1";
+                    i--;
+                }
+                
+                else if(simb == "A1"){
+                    estados.push(11);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == TipoToken.COMA){
+                    estados.push(12);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 9){
+                if(simb == TipoToken.FROM){
+                    simb = "A3";
+                    i--;
+                }
+                else if(simb == TipoToken.COMA){
+                    simb = "A3";
+                    i--;
+                }
+                else if(simb == "A3"){
+                    estados.push(13);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == TipoToken.PUNTO){
+                    estados.push(14);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 10){
+                if(simb == TipoToken.FROM){
+                    simb = "D";
+                    i--;
+                    estados.pop();
+                    estados.pop();
+                }
+                else
+                    hayErrores = true;
+            }
+            else if (estados.peek() == 11){
+                if(simb == TipoToken.FROM){
+                    simb = "A";
+                    i--;
+                    estados.pop();
+                    estados.pop();
+                } else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 12){
+                if(simb == "A2"){
+                    estados.push(8);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == TipoToken.IDENTIFICADOR){
+                    estados.push(9);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else if(simb == "A"){
+                    estados.push(15);
+                    i++;
+                    simb = tokens.get(i).tipo;
+                }
+                else
+                    hayErrores = true;
+            }
+            else if(estados.peek() == 13){
+                if(simb == TipoToken.FROM){
+                    simb = "A2";
+                    i--;
+                    estados.pop();
+                    estados.pop();
+                }
+                else if(simb == TipoToken.COMA){
+                    simb = "A2";
+                    i--;
+                    estados.pop();
+                    estados.pop();
+                }
+                else
+                    hayErrores = true;
+            }
 
             
         }
